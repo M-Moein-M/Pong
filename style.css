@@ -1,4 +1,5 @@
-.game{
+.game {
+    /*try not to change these values*/
     width: 600px;
     height: 400px;
     background-color: #083a4c;
@@ -8,8 +9,27 @@
     padding: 0;
 }
 
-#ball{
+#ball {
     position: absolute;
     top: 0;
     left: 0;
+}
+
+#player1-stick {
+    position: absolute;
+    /*top: 160px;*/
+    left: 0;
+    /*height of the sticks are used in the js code explicitly. changing this may result in bad experience in moving the sticks*/
+    width: 8px;
+    height: 80px;
+}
+
+#player2-stick {
+    position: absolute;
+    /*top: 160px;*/
+    right: 0;
+
+    /*height of the sticks are used in the js code explicitly. changing this may result in bad experience in moving the sticks*/
+    width: 8px;
+    height: 80px;
 }
