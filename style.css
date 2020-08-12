@@ -28,6 +28,8 @@
     /*height of the sticks are used in the js code explicitly. changing this may result in bad experience in moving the sticks*/
     width: 8px;
     height: 80px;
+
+    transition-duration: 0.3s;
 }
 
 #player2-stick {
@@ -38,4 +40,6 @@
     /*height of the sticks are used in the js code explicitly. changing this may result in bad experience in moving the sticks*/
     width: 8px;
     height: 80px;
+
+    transition-duration: 0.3s;
 }
