@@ -35,12 +35,7 @@ function gameInit() {
         return Number(gameBall.style.top.replace('px', '')); // returns top of the ball image this will be considered as y
     }
 
-
     // moving the player1 and player2's stick
-    let player1StickMoveTop;
-    let player1StickMoveDown;
-    let player2StickMoveTop;
-    let player2StickMoveDown;
 
     let player1Stick = document.getElementById('player1-stick');
     let player2Stick = document.getElementById('player2-stick');
@@ -81,10 +76,8 @@ function gameInit() {
         console.log(event.code);
     }
 
-
     window.addEventListener('keyup', moveStick);
 }
-
 
 window.addEventListener('load', function () {
     console.log('game started')
