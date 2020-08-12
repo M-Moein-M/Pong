@@ -15,6 +15,12 @@
     left: 0;
 }
 
+.scores-monitor{
+    position: relative;
+    left: 250px;
+    width: 300px;
+}
+
 #player1-stick {
     position: absolute;
     /*top: 160px;*/

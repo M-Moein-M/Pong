@@ -4,27 +4,54 @@ function gameInit() {
     const gameDivHeight = 400;
 
     let gameBall = document.getElementById('ball');
-    gameBall.style.left = '300px';
-    gameBall.style.top = '200px'
 
-    let gameBallVx = 2; // indicates the velocity of the ball in x axis
-    let gameBallVy = 2; // indicates the velocity of the ball in y axis
+    let gameBallVx; // indicates the velocity of the ball in x axis
+    let gameBallVy; // indicates the velocity of the ball in y axis
 
-    let gameInterval = setInterval(movement, 50);  // this moves the ball every interval
+    let player1Score = 0;
+    let player2Score = 0;
+
+    let gameInterval;
+
+    startNewRound();
 
     function movement() {  // moves the ball based on vx and vy and also checks for wall collision to change the vx or vy accordingly
-        let current_x = getBallX();
-        let current_y = getBallY();
+        let currentX = getBallX();
+        let currentY = getBallY();
 
-        if (getBallX() + 20 > gameDivWidth || getBallX() < 0) { // 20 is width and height of image
+        if (currentX + 20 > gameDivWidth) {  // if the ball reaches any of the side walls of the div it means an score for one of the players
+            player1WonRound();
+            startNewRound();
+            return;
+        }
+        if (currentX < 0) {
+            player2WonRound();
+            startNewRound();
+            return;
+        }
+
+        // check if the ball hit the sticks
+
+        // if the right side of the ball was equal-bigger to the
+        // in these if statements, 10 is added because we dont need the whole ball to hit stick only half of it will work
+        if (currentX + 20 + 8 >= gameDivWidth
+            && getBallY() + 10 >= Number(player2Stick.style.top.replace('px', ''))
+            && getBallY() + 20 - 10 <= Number(player2Stick.style.top.replace('px', '')) +80) {
             gameBallVx *= -1;
         }
 
-        if (getBallY() + 20 > gameDivHeight || getBallY() < 0) {  // 20 is width and height of image
+        if (currentX < 8
+            && getBallY() + 10> Number(player1Stick.style.top.replace('px', ''))
+            && getBallY() + 20 -10 < Number(player1Stick.style.top.replace('px', '')) +80) {
+            gameBallVx *= -1;
+        }
+
+
+        if (currentY + 20 > gameDivHeight || currentY < 0) {  // 20 is width and height of image
             gameBallVy *= -1;
         }
-        gameBall.style.left = (current_x + gameBallVx).toString() + 'px';
-        gameBall.style.top = (current_y + gameBallVy).toString() + 'px';
+        gameBall.style.left = (currentX + gameBallVx).toString() + 'px';
+        gameBall.style.top = (currentY + gameBallVy).toString() + 'px';
     }
 
     function getBallX() {
@@ -35,12 +62,36 @@ function gameInit() {
         return Number(gameBall.style.top.replace('px', '')); // returns top of the ball image this will be considered as y
     }
 
+
+    function startNewRound() {
+        gameBallVx = 2 * Math.pow(-1, Math.floor(Math.random()*2));
+        gameBallVy = 2 * Math.pow(-1, Math.floor(Math.random()*2));
+
+        gameBall.style.left = '300px';
+        gameBall.style.top = '200px';
+
+        document.querySelector('.scores-monitor').innerHTML = player1Score + ' - ' + player2Score;
+        gameInterval = setInterval(movement, 10);  // this moves the ball every interval
+    }
+
+
+    function player1WonRound() {
+        player1Score++;
+        clearInterval(gameInterval);
+    }
+
+    function player2WonRound() {
+        player2Score++;
+        clearInterval(gameInterval);
+    }
+
     // moving the player1 and player2's stick
 
     let player1Stick = document.getElementById('player1-stick');
     let player2Stick = document.getElementById('player2-stick');
     let deltaY = 32; // this indicates amount of movement for each stick in every move
-    function moveElementUp(element) {
+
+    function moveElementUp(element) { // moves the input stick up
         let top = Number(element.style.top.replace('px', ''));
         let newPositionTop = top - deltaY;
         if (newPositionTop < 0) // we dont want the sticks to move up more that the game div
@@ -48,7 +99,7 @@ function gameInit() {
         element.style.top = (newPositionTop).toString() + 'px';
     }
 
-    function moveElementDown(element) {
+    function moveElementDown(element) {  // moves the input stick down
         let top = Number(element.style.top.replace('px', ''));
         let newPositionTop = top + deltaY;
         if (newPositionTop + 80 > gameDivHeight) // 80 is the height of the sticks
@@ -80,6 +131,6 @@ function gameInit() {
 }
 
 window.addEventListener('load', function () {
-    console.log('game started')
+    console.log('game started');
     gameInit();
 });
