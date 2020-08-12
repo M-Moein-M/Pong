@@ -1,7 +1,15 @@
 .game{
     width: 600px;
     height: 400px;
-    background-color: #8b8b8b;
-    margin-top: 30px;
-    border: 2px black solid;
+    background-color: #083a4c;
+    border: 1px red solid;
+    border-radius: 3px;
+    position: relative;
+    padding: 0;
+}
+
+#ball{
+    position: absolute;
+    top: 0;
+    left: 0;
 }
